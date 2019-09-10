@@ -6,12 +6,14 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,7 +24,6 @@ public class HomeController {
 	
 	@Autowired
 	Userservice us;
-	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -45,5 +46,23 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/logincheck", method=RequestMethod.POST)
+	public String logincheck(HttpSession session, User user) {
+		
+		System.out.println("User 체크시작 ");
+		boolean result =us.check_user(user);
+		System.out.println("로그인여부: "+ result);
+		if(result) {
+			session.setAttribute("user", user.getId());
+			return "redirect:/board";
+		}
+		else {
+			System.out.println("로그인오류");
+		}
+		
+		return "redirect:/";
+	}
+	
 	
 }

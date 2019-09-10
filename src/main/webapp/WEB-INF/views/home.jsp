@@ -12,9 +12,9 @@
 </head>
 <body>
 <h1>로그인</h1>
-<form action="" method="post">
-id: <input type="text" name="id" id="id" placeholder="아이디를입격하세요"><br>
-pw: <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요"><br>
+<form action="/web/logincheck" method="post">
+id: <input type="text" name="id"  placeholder="아이디를입격하세요"><br>
+pw: <input type="password" name="pwd"  placeholder="비밀번호를 입력하세요"><br>
 <input type="submit" value="로그인" id="login">
 <input type="button" value="회원가입" id="newUser" onclick="u_create()">
 </form>

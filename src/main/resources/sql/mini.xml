@@ -3,11 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mini">
-  <select id="test" resultType="String">
-    select 1 as test
-  </select>
   
   <insert id="c_user" parameterType="com.java.web.bean.User">
   	insert into USER values (#{id}, #{pwd})
   </insert>
+  
+  <insert id="i_board" parameterType="com.java.web.bean.BoardVO">
+  	insert into board (title, comment, id) values (#{title}, #{comment}, #{id})
+  </insert>
+  
+  <select id="check_user" parameterType="com.java.web.bean.User" resultType="com.java.web.bean.User">
+  	select id, pwd from USER <if test="id != ''">  where id = #{id} </if> <if test="pwd != '' "> and pwd = #{pwd} </if>
+  </select>
+  
+  <select id="select_board" resultType="com.java.web.bean.BoardVO">
+    select title, comment, id from board where delYN = 'N'
+  </select>
+  
 </mapper>
