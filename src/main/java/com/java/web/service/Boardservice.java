@@ -31,4 +31,10 @@ public class Boardservice {
 		return result;
 	}
 	
+	public int update(BoardVO bvo) {
+		int result = sqlsession.update("mini.update_board", bvo);
+		
+		return result;
+	}
+	
 }

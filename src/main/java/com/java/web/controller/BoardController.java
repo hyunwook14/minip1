@@ -1,8 +1,11 @@
 package com.java.web.controller;
 
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.java.web.bean.BoardVO;
 import com.java.web.service.Boardservice;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/board")
@@ -40,7 +45,22 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
-	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public void update(BoardVO bvo, HttpServletResponse res) {
+		System.out.println( bvo.toString());
+		int result =bs.update(bvo);
+		System.out.println("성공여부: "+result);
+		
+		
+		try {
+			res.setContentType("text/plan; charset=utf-8");
+//			res.setHeader("Content-type", "text/html");
+			res.getWriter().append(result + "");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
 	
 	
 }
