@@ -24,4 +24,8 @@
   	UPDATE board SET title = #{title}, comment = #{comment} WHERE NO = #{no} and id =#{id}
   </update>
   
+  <update id="delete_board" parameterType="com.java.web.bean.BoardVO">
+  	update board set delYN ="Y" where no = #{no} and id = #{id}
+  </update>
+  
 </mapper>

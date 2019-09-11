@@ -54,7 +54,25 @@
 		}
 	}
 	
-	function callback(){
+	function deleted(){
+		
+		httpRequest.open("POST", "/web/board/delete");
+		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+		httpRequest.send("no="+arr[0]+"&title="+arr[1]+
+				"&comment="+arr[2]+"&id="+arr[3]);
+		httpRequest.onreadystatechange = function(){
+			console.log(this.readyState, this.responseText, this);
+			if(this.readyState ==4 ){
+				console.log(this);
+				 if(this.responseText == "1"){
+					location.href="/web/board";
+					alert("성공");
+				}else {
+					alert("권한이없습니다");
+				} 
+			}
+		}
+		
 	}
 </script>
 <style>
@@ -74,7 +92,7 @@
 	내용:<input type="text" name="comment">
 	<input type="submit" value="추가">
 	<input type="button" value="수정" onclick="update()">
-	<input type="button" value="삭제" onclick="">
+	<input type="button" value="삭제" onclick="deleted()">
 </form>
 	<ul class="listhead">
 		<li>번호</li><li>제목</li><li>내용</li><li>작성자</li>
