@@ -19,6 +19,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		System.out.println("Minip2 당겨쓰기 수정사항");
 		return "home";
 	}
 	
