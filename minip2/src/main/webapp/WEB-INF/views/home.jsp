@@ -38,41 +38,44 @@
 		
 		for( i = 1; i <= lastDate.getDate(); i++){
 			cell = row.insertCell();
-			cell.innerHTML = i + "<br><input type='checkbox' onclick='attendcheck()'>";
+			cell.innerHTML = i + "<br><input type='checkbox' onclick='attendcheck("+i+")'>";
 			cnt = cnt + 1;
 			if ( cnt % 7 == 1){
-				cell.innerHTML = i +"<br><input type='checkbox' onclick='attendcheck()'>";
+				cell.innerHTML = i +"<br><input type='checkbox' onclick='attendcheck("+i+")'>";
 			}
 			if( cnt % 7 == 0){
-				cell.innerHTML = i +"<br><input type='checkbox' onclick='attendcheck()'>";
+				cell.innerHTML = i +"<br><input type='checkbox' onclick='attendcheck("+i+")'>";
 				row=calendar.insertRow();
 			}
 			if(today.getFullYear()==date.getFullYear()&&today.getMonth()==date.getMonth()&&i==date.getDate()){
 				cell.bgColor = "#BCF1B1"; //오늘날짜배경색
 			}
 		}
+		
+		var checklist = document.getElementsByTagName("input");
+		
+		
+		 for(var i = 0 ; i <checklist.length; i++){
+			if(date.getDate()-1 > i)
+			 checklist[i].disabled = true;
+		} 
+		console.log("체크불러오기시작")
+		select();
 	}
 	
-	function attendcheck(){
+	function attendcheck(item){
+		console.log("itemindex: ", item)
 		var checklist = document.getElementsByTagName("input");
-		var flag = false;
-		var index= [];
-		for(var i = 0 ; i < checklist.length; i++){
-			if(checklist[i].checked){
-				flag = checklist[i].checked;
-				index[index.length] = i+1;
-			}
-		}
+		var flag = checklist[item - 1].checked;
 		
-		console.log( index , "-index")
+		console.log(flag,"--flag1")
+		
 		httpRequest.open("POST", "/minip2/attendcheck");
 		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-		httpRequest.send("id=${sessionScope.id}&day="+index);
+		httpRequest.send("id=${sessionScope.id}&day="+item+"&flag="+flag);
 		
 		httpRequest.onreadystatechange = function(){
-			console.log(this.readyState, this.responseText, this);
 			if(this.readyState ==4 ){
-				console.log(this);
 				if(this.responseText == "1"){
 					alert("성공");
 				}else {
@@ -80,8 +83,26 @@
 				}
 			}
 		}
+	}
+	
+	function select(){
+		console.log("체크실행함수 시작")
+		httpRequest.open("POST", "/minip2/checkselect");
+		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+		httpRequest.send(); 
 		
-		
+		httpRequest.onreadystatechange = function(){
+			console.log(this)
+			if(this.readyState ==4 ){
+				console.log(this.responseText, "---돌아온데이터")
+				if(this.responseText == "1"){
+					alert("성공");
+					
+				}else {
+					alert("실패");
+				}
+			}
+		}
 	}
 	
 </script>

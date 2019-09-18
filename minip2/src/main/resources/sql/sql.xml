@@ -10,4 +10,17 @@
   <select id="logincheck" parameterType="com.java.web.DAO.User" resultType="com.java.web.DAO.User">
   	select id, pwd from USER  <if test="id != ''">where id = #{id} </if> <if test="pwd != ''">and pwd = #{pwd} </if>
   </select>
+  
+   <select id="checkselect" parameterType="com.java.web.DAO.AttendCheck" resultType="com.java.web.DAO.AttendCheck">
+ 	select * from attendcheck where id = #{id} <if test="day != '' ">and day = #{day}</if>
+   </select>
+  
+   <insert id="checkinsert" parameterType="com.java.web.DAO.AttendCheck">
+     insert into attendcheck (id, `day`, `check`) values (#{id}, #{day}, #{check}) 
+   </insert>
+   
+   <update id="checkupdate" parameterType="com.java.web.DAO.AttendCheck">
+   	UPDATE attendcheck SET `CHECK` = #{check} WHERE id = #{id} AND `day` = #{day}
+   </update>
+  
 </mapper>
