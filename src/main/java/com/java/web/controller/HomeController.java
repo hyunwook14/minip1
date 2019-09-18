@@ -42,7 +42,12 @@ public class HomeController {
 			if(("").equals(user.getPwd())) return "redirect:/c_user";
 			else return "redirect:/c_user";
 		}else {
-			int result = us.creatuser(user); 
+			//id 중복체크 필요
+			int result = us.creatuser(user);
+			if(result == 0) {
+					req.setAttribute("t", result);
+					return "c_user";
+			}
 		}
 		return "redirect:/";
 	}
@@ -72,6 +77,5 @@ public class HomeController {
 		System.out.println("로그아웃성공");
 		return "redirect:/";
 	}
-	
 	
 }

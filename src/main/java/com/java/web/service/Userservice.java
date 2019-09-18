@@ -19,7 +19,9 @@ public class Userservice {
 	
 	public int creatuser(User user) {
 		int result = 0;
-		result = sqlsession.insert("mini.c_user", user);
+		String id =sqlsession.selectOne("mini.idcheck", user);
+		System.out.println("id: "+id);
+		if(id == null) result = sqlsession.insert("mini.c_user", user);
 		return result;
 	}
 	
