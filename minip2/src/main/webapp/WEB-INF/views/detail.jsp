@@ -29,5 +29,6 @@
  		} 	
  	%>
  </ul>
+ <a href="/minip2/">달력으로</a>
 </body>
 </html>

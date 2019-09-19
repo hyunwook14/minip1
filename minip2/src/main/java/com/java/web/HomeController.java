@@ -35,13 +35,17 @@ public class HomeController {
 	@Autowired
 	CheckService cs;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		return "home";
-	}
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String home(HttpSession session) {
+//		System.out.println(session.getAttribute("id"));
+//		if(session.getAttribute("id") == null) return "redirect:/login";
+//		return "home";
+//	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String home(HttpServletRequest req) {
+	@RequestMapping(value = "/")
+	public String home(HttpServletRequest req, HttpSession session) {
+		System.out.println("boardsession: "+session.getAttribute("id"));
+		if(session.getAttribute("id") == null) return "redirect:/login";
 		return "home";
 	}
 	
@@ -78,9 +82,17 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/detail/{i}")
-	public String detail(@PathVariable("i") int no, HttpServletRequest req) {
+	public String detail(@PathVariable("i") int no, HttpServletRequest req, HttpSession session) {
 		req.setAttribute("list", cs.checkperson(no));
-		
+		System.out.println(session.getAttribute("id"));
+//		if(session.getAttribute("id") == null) return "redirect:/login";
 		return "detail";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		System.out.println("로그아웃성공");
+		return "redirect:/login";
 	}
 }

@@ -109,12 +109,17 @@
 		}
 	}
 	
+	function logout(){
+		location.href="/minip2/logout";
+	}
+	
 </script>
 </head>
 <body onload="build();">
 <h1>calendar</h1>
 <h2>user: ${sessionScope.id}</h2>
 <h3 id ="month"></h3>
+<button onclick="logout()">로그아웃</button>
 <table id ="calendar">
 	<tr>
 	</tr>
