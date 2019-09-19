@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.java.web.DAO.User;
+import com.java.web.service.CreateService;
 import com.java.web.service.LoginService;
 
 @Controller
@@ -19,6 +20,9 @@ public class LoginController {
 
 	@Autowired
 	LoginService ls;
+	
+	@Autowired
+	CreateService cs;
 	
 	@RequestMapping( value="/logincheck", method=RequestMethod.POST)
 	public void logincheck(User user, HttpServletResponse res, HttpSession session) {
@@ -52,7 +56,18 @@ public class LoginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
+	@RequestMapping(value="/create_u", method=RequestMethod.POST)
+	public void create_u(HttpServletResponse res, User user) {
+		try {
+			res.setContentType("text/html; charset=utf-8");
+			int result = cs.createuser(user);
+			if(result == 1 ) res.getWriter().print("<script>alert('회원가입성공'); location.href='/minip2/login' </script>");
+			else res.getWriter().print("<script>alert('회원가입실패'); location.href='/minip2/c_user' </script>"); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
