@@ -38,13 +38,13 @@
 		
 		for( i = 1; i <= lastDate.getDate(); i++){
 			cell = row.insertCell();
-			cell.innerHTML = i + "<br><input type='checkbox' onclick='attendcheck("+i+")'>";
+			cell.innerHTML ="<a href='/minip2/detail/"+i+"'>"+ i+"</a>" + "<br><input type='checkbox' onclick='attendcheck("+i+")'>";
 			cnt = cnt + 1;
 			if ( cnt % 7 == 1){
-				cell.innerHTML = i +"<br><input type='checkbox' onclick='attendcheck("+i+")'>";
+				cell.innerHTML = "<a href='/minip2/detail/"+i+"'>"+ i+"</a>"  +"<br><input type='checkbox' onclick='attendcheck("+i+")'>";
 			}
 			if( cnt % 7 == 0){
-				cell.innerHTML = i +"<br><input type='checkbox' onclick='attendcheck("+i+")'>";
+				cell.innerHTML ="<a href='/minip2/detail/"+i+"'>"+ i+"</a>"  +"<br><input type='checkbox' onclick='attendcheck("+i+")'>";
 				row=calendar.insertRow();
 			}
 			if(today.getFullYear()==date.getFullYear()&&today.getMonth()==date.getMonth()&&i==date.getDate()){
@@ -95,12 +95,16 @@
 			console.log(this)
 			if(this.readyState ==4 ){
 				console.log(this.responseText, "---돌아온데이터")
-				if(this.responseText == "1"){
-					alert("성공");
-					
-				}else {
-					alert("실패");
+				//var data = JSON.parse(this.responseText);
+				var data = JSON.parse(this.responseText);
+				console.log(data)
+				console.log(data[0])
+				
+				for(var i =0 ; i<data.length; i++){
+					if(data[i].check ==1)
+						document.getElementsByTagName("input")[data[i].day-1].checked= true
 				}
+				
 			}
 		}
 	}

@@ -37,4 +37,9 @@ public class LoginController {
 		}
 	}
 	
+	public void loginsession(HttpSession session) {
+		
+		
+	}
+	
 }

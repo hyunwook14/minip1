@@ -2,6 +2,7 @@ package com.java.web;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,11 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.java.web.DAO.AttendCheck;
 import com.java.web.service.CheckService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Handles requests for the application home page.
@@ -56,15 +61,26 @@ public class HomeController {
 	public void checkselect(HttpServletResponse res , HttpSession session) {
 		AttendCheck ac= new AttendCheck();
 		try {
-			res.setContentType("html/text; charset=utf-8");
+			res.setContentType("application/json; charset=utf-8");
 			ac.setId((String)session.getAttribute("id"));
 			List<AttendCheck> result =cs.checkselect(ac);
 			
-			res.getWriter().println(result);
+			HashMap<String, Object> test = new HashMap<String, Object>();
+			test.put("test", result);
+			
+			JSONObject jobj = JSONObject.fromObject(test);
+			
+			res.getWriter().println(jobj.get("test").toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	@RequestMapping("/detail/{i}")
+	public String detail(@PathVariable("i") int no, HttpServletRequest req) {
+		req.setAttribute("list", cs.checkperson(no));
+		
+		return "detail";
+	}
 }

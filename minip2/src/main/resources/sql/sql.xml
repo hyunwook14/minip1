@@ -22,5 +22,9 @@
    <update id="checkupdate" parameterType="com.java.web.DAO.AttendCheck">
    	UPDATE attendcheck SET `CHECK` = #{check} WHERE id = #{id} AND `day` = #{day}
    </update>
+   
+   <select id="checkperson" resultType="com.java.web.DAO.AttendCheck">
+   	select id, `check`, `day` from attendcheck where `day` = #{no}
+   </select>
   
 </mapper>

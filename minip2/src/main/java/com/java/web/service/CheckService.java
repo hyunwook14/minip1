@@ -51,12 +51,12 @@ public class CheckService {
 		return sqlsession.selectList("calendar.checkselect", ac);
 	}
 	
-	public void checkinsert() {
-		
-	}
-	
 	public int checkupdate(AttendCheck ac) {
 		return sqlsession.update("calendar.checkupdate", ac);
+	}
+	
+	public List<AttendCheck> checkperson(int no) {
+		return sqlsession.selectList("calendar.checkperson", no);
 	}
 	
 }
