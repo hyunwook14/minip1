@@ -26,5 +26,9 @@
    <select id="checkperson" resultType="com.java.web.DAO.AttendCheck">
    	select id, `check`, `day` from attendcheck where `day` = #{no}
    </select>
+   
+   <select id="idcheck" resultType="com.java.web.DAO.User">
+    select id from USER where id = #{id}
+   </select>
   
 </mapper>

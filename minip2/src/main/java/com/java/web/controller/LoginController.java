@@ -2,6 +2,7 @@ package com.java.web.controller;
 
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -35,6 +36,23 @@ public class LoginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/c_user", method = RequestMethod.GET)
+	public String c_user() {
+		return "c_user";
+	}
+	
+	@RequestMapping(value="/idcheck", method = RequestMethod.POST)
+	public void idcheck(HttpServletRequest req, HttpServletResponse res) {
+		try {
+			int result =ls.idcheck(req);
+			res.setContentType("text/html; charset=utf-8");
+			res.getWriter().append(result+"");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
