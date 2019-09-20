@@ -16,8 +16,7 @@ public class CreateService {
 		int result =0;
 		
 		System.out.println(user.toString());
-		if(!"".equals(user.getId()) && "".equals(user.getPwd())) {
-			
+		if(!("".equals(user.getId()) && "".equals(user.getPwd()))) {
 			result = sqlsession.insert("calendar.c_user", user);
 		}else {
 			System.out.println("null 값으로 insert 예외처리");
